@@ -1,0 +1,77 @@
+<div class="todo-box">
+<h1 class="center">To-Do List</h1>
+<hr />
+<div>
+  <form action="/" method="post">
+      <input class="input-box" type="text" name="item" placeholder="Enter a task..." required>
+        <button class="add-btn" type="submit" name="addtask"><i class="fas fa-plus"></i>Add task</button>
+</form>
+</div>
+
+
+<hr />
+<div class="item-box">
+{{#each allItemsArray}}
+  <form action="/id" method="POST">
+    <input type="hidden" name="objectID" value="{{this._id}}" />
+  </form>
+
+
+        {{!-- Id: {{this._id}}<br /> --}}
+        <div class="item-text">
+          {{#if this.completed}}
+            <h4 class="curve" style="text-decoration:line-through; background-color:{{this.colorCode}}">Item: {{this.item}}</h4>
+            <h4>{{this.date}}</h4>
+          {{else}}
+          <form action="/edit" method="post">
+            <input class="edit-input-box curve" type="text"
+            value="{{this.item}}"
+            name="editContent"
+            placeholder="<i class='far fa-edit'></i>"
+           style="background-color:{{this.colorCode}}">
+
+           <button class="edit-btn" name="editBtn" value={{this._id}} onClick="this.form.submit()"><i class="far fa-edit"></i></button>
+          </form>
+                <div><h4>{{this.date}}</h4></div>
+          
+          {{/if}}
+        </div>
+         <div class="select-color">
+        <form action="/color" method="post">
+        <input type="hidden" name="objectID" value="{{this._id}}" />
+          <input type="radio" name="colorCode" value="tomato" onClick="this.form.submit()">
+          <label for="tomato">High</label><br>
+          <input type="radio" id="orange" name="colorCode" value="orange" onClick="this.form.submit()">
+          <label for="orange">Medium</label><br>
+          <input type="radio" id="darkseagreen" name="colorCode" value="darkseagreen" onClick="this.form.submit()">
+          <label for="green">Low</label>
+        </form>
+      </div>
+        <div class="completion-status">
+            <form action="/completeToggle" method="post">
+              <label for="checkbox">Complete:</label>
+              <input type="checkbox" name="checkbox" value="{{this._id}}" onChange="this.form.submit()" />
+          </form>
+        </div>
+        {{!-- change css based on value --}}
+        {{!-- Completed: {{this.completed}}<br /> --}}
+        {{!-- ColorCode: {{this.colorCode}}<br /> --}}
+        
+      
+      <div class="delete">
+      <form action="/delete" method="post">
+          <button class="delete-button" name="delete" value="{{this._id}}" onClick="this.form.submit()"><i class="far fa-trash-alt"></i></button>            
+      </form>
+      </div>
+      
+     
+  
+
+      <hr />
+
+    {{/each}}
+
+</div>
+  
+
+</div>
